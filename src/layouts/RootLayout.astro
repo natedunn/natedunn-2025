@@ -1,0 +1,70 @@
+---
+import "@fontsource/geist-mono/400.css";
+import "@fontsource/geist-mono/900.css";
+
+import geistMono400 from "@fontsource/geist-mono/files/geist-mono-latin-400-normal.woff2?url";
+import geistMono900 from "@fontsource/geist-mono/files/geist-mono-latin-900-normal.woff2?url";
+
+import "../base.css";
+import ThemeManager from "../components/ThemeManager.astro";
+import { ClientRouter } from "astro:transitions";
+import { ModeWatcher } from "mode-watcher";
+import ThemeSwitcher from "../components/theme-switcher.svelte";
+
+import { db, Menu } from "astro:db";
+
+const menu = await db.select().from(Menu).all();
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<ModeWatcher client:load />
+		<ThemeManager defaultTheme="auto" />
+		<ClientRouter />
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link
+			rel="preload"
+			as="font"
+			type="font/woff2"
+			href={geistMono400}
+			crossorigin="anonymous"
+		/>
+		<link
+			rel="preload"
+			as="font"
+			type="font/woff2"
+			href={geistMono900}
+			crossorigin="anonymous"
+		/>
+		<meta name="generator" content={Astro.generator} />
+		<title>Astro Basics</title>
+		<style is:global>
+			:root[data-theme="light"] {
+				/* CSS variables */
+			}
+			:root[data-theme="dark"] {
+				/* CSS variables */
+			}
+		</style>
+	</head>
+	<body>
+		<nav class="flex flex-row gap-2 items-center">
+			<a href="/"> ñ </a>
+			<div>
+				{
+					menu.map((item) => {
+						return <a href={item.url}>{item.text}</a>;
+					})
+				}
+				<ThemeSwitcher client:load />
+			</div>
+		</nav>
+		<slot />
+		<footer>
+			<p>© 2023 Nate Dunn</p>
+		</footer>
+	</body>
+</html>

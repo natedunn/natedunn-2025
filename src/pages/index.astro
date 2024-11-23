@@ -1,8 +1,57 @@
 ---
-import { Welcome } from 'astro:components';
-import Layout from '../layouts/Layout.astro';
+import { db, Project } from "astro:db";
+import RootLayout from "../layouts/RootLayout.astro";
+
+const projects = await db.select().from(Project).all();
 ---
 
-<Layout>
-	<Welcome title="Welcome to Astro" />
-</Layout>
+<RootLayout>
+	<div class="bg-noir py-10">
+		<div class="container flex gap-12 items-center">
+			<div>
+				<div class="relative w-48 h-48 flex items-center justify-center">
+					<img
+						src="me.webp"
+						alt="Nate's profile picture"
+						class="h-full w-full inset-0 absolute border border-"
+					/>
+					<div class="h-full w-full dark:bg-halftone translate-x-12"></div>
+				</div>
+			</div>
+			<div class="flex flex-col gap-4">
+				<div class="flex items-center gap-2">
+					<span class="text-2xl font-bold text-malva">|</span>
+					<h1 class="text-xl font-bold">Hello world, I'm Nate</h1>
+				</div>
+				<p class="text-lg opacity-80">
+					I'm a web engineer that builds full-stack experiences with a keen eye
+					for design, user-experience, and accessability. I'm originally from
+					Phoenix, Arizona, but now living in Mexico City.
+				</p>
+			</div>
+		</div>
+	</div>
+	<!-- <ThemeSelect /> -->
+	<div class="container py-12">
+		<div class="flex items-center gap-2">
+			<span class="text-2xl font-bold text-peach">|</span>
+			<h3 class="text-xl font-bold">Projects</h3>
+		</div>
+		<ul>
+			{
+				projects.map((project) => (
+					<li>
+						<span />
+						<span>{project.name}</span>
+						<div class="flex flex-row gap-2 flex-wrap font-normal">
+							{JSON.parse(project.tech)?.map((tech: string) => {
+								return <div>{tech}</div>;
+							})}
+						</div>
+						{/* <img src={project.image} alt={project.name} /> */}
+					</li>
+				))
+			}
+		</ul>
+	</div>
+</RootLayout>
