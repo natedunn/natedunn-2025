@@ -25,8 +25,17 @@ export default defineConfig({
 		imageService: true,
 		devImageService: "sharp",
 	}),
+	image: {
+		domains: [
+			"nate.space",
+			"natedunn.net",
+			"utfs.io",
+			...(import.meta.env.DEV ? ["localhost:4321", "utfs.io"] : []),
+		],
+	},
 	integrations: [
 		tailwind({
+			configFile: "./tailwind.config.ts",
 			applyBaseStyles: false,
 		}),
 		svelte(),

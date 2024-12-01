@@ -7,6 +7,22 @@ const insertProjects = async () => {
 	await db.insert(Project).values([
 		{
 			name: "Rad",
+			image: "https://natedunn.net/projects/rad/rad-bg-light.webp",
+			tech: JSON.stringify([
+				"React",
+				"Next.js",
+				"TypeScript",
+				"Tailwind",
+				"Postgres",
+				"Drizzle",
+			]),
+			description:
+				"An exploration of lists and how they can be made more fun, engaging, and sharable.",
+			externalUrl: "https://superrad.app",
+			status: JSON.stringify(["live"]),
+		},
+		{
+			name: "Kino",
 			image:
 				"https://utfs.io/f/9a90b28e-b6e8-497b-aef1-3340f190d90c-kdqex6.jpeg",
 			tech: JSON.stringify([
@@ -17,12 +33,9 @@ const insertProjects = async () => {
 				"Postgres",
 				"Drizzle",
 			]),
-		},
-		{
-			name: "Kino",
-			image:
-				"https://utfs.io/f/9a90b28e-b6e8-497b-aef1-3340f190d90c-kdqex6.jpeg",
-			tech: JSON.stringify(["Solid.js", "Solid Start", "Tailwind"]),
+			description: "The ideal way to get feedback on your projects",
+			externalUrl: "https://usekino.com",
+			status: JSON.stringify(["live"]),
 		},
 		{
 			name: "Sportsball",
@@ -35,12 +48,22 @@ const insertProjects = async () => {
 				"Tailwind",
 				"Postgres",
 			]),
+			description:
+				"The cleanest way to follow your favorite sports leagues, teams, and players.",
+			externalUrl: "https://sportsball.live",
+			githubUrl: "https://github.com/natedunn/sportsball",
+			status: JSON.stringify(["live"]),
 		},
 		{
 			name: "Proper",
 			image:
 				"https://utfs.io/f/9a90b28e-b6e8-497b-aef1-3340f190d90c-kdqex6.jpeg",
 			tech: JSON.stringify(["Solid.js", "Solid Start", "Tailwind"]),
+			description:
+				"Generate your own shell script to globally install from NPM, Homebrew, Mac app store, & Composer.",
+			externalUrl: "https://proper.sh",
+			githubUrl: "https://github.com/natedunn/proper-builder",
+			status: JSON.stringify(["live"]),
 		},
 	]);
 };

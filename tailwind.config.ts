@@ -1,9 +1,9 @@
 import { fontFamily } from "tailwindcss/defaultTheme";
 import tailwindcssAnimate from "tailwindcss-animate";
+import plugin from "tailwindcss/plugin";
 
-const maxWidth = "52rem";
+const maxWidth = "62rem";
 
-/** @type {import('tailwindcss').Config} */
 const config = {
 	darkMode: ["class"],
 	content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
@@ -103,7 +103,24 @@ const config = {
 			},
 		},
 	},
-	plugins: [tailwindcssAnimate],
+	plugins: [
+		plugin(function ({
+			addVariant,
+		}: {
+			addVariant: (name: string, variants: string[]) => void;
+		}) {
+			addVariant("hocus", ["&:hover", "&:focus"]);
+			addVariant("group-hocus", [
+				":merge(.group):hover &",
+				":merge(.group):focus &",
+			]);
+			addVariant("factive", ["&:active", "&:focus"]);
+			addVariant("all", ["&:active", "&:focus", "&:hover"]);
+			addVariant("list", [".list-primary &"]);
+			addVariant("light", ["html.light &"]);
+		}),
+		tailwindcssAnimate,
+	],
 };
 
 export default config;

@@ -1,57 +1,141 @@
 ---
 import { db, Project } from "astro:db";
 import RootLayout from "../layouts/RootLayout.astro";
+import HalftoneImage from "$lib/components/HalftoneImage.astro";
+import HalftoneSeparator from "$lib/components/HalftoneSeparator.astro";
+// import { ChevronRight } from "lucide-astro";
 
 const projects = await db.select().from(Project).all();
 ---
 
 <RootLayout>
-	<div class="bg-noir py-10">
-		<div class="container flex gap-12 items-center">
-			<div>
-				<div class="relative w-48 h-48 flex items-center justify-center">
-					<img
-						src="me.webp"
-						alt="Nate's profile picture"
-						class="h-full w-full inset-0 absolute border border-"
-					/>
-					<div class="h-full w-full dark:bg-halftone translate-x-12"></div>
-				</div>
-			</div>
+	<header class="py-10">
+		<div class="container flex gap-12 items-center flex-row mt-12">
 			<div class="flex flex-col gap-4">
 				<div class="flex items-center gap-2">
-					<span class="text-2xl font-bold text-malva">|</span>
-					<h1 class="text-xl font-bold">Hello world, I'm Nate</h1>
+					<span class="text-3xl font-bold text-malva">|</span>
+					<h1 class="text-2xl font-bold">Hello world, I'm Nate</h1>
 				</div>
-				<p class="text-lg opacity-80">
+				<p class="text-lg text-muted-foreground">
 					I'm a web engineer that builds full-stack experiences with a keen eye
 					for design, user-experience, and accessability. I'm originally from
 					Phoenix, Arizona, but now living in Mexico City.
 				</p>
+				<div class="flex gap-6 flex-wrap">
+					<a class="link" href="/about">Learn more &raquo;</a>
+					<a class="link" href="/projects">View resume &raquo;</a>
+				</div>
+			</div>
+			<div>
+				<HalftoneImage
+					width={192}
+					height={192}
+					src="me.webp"
+					alt="Nate Dunn"
+					class="w-24 h-48 object-cover"
+				/>
 			</div>
 		</div>
-	</div>
-	<!-- <ThemeSelect /> -->
-	<div class="container py-12">
-		<div class="flex items-center gap-2">
-			<span class="text-2xl font-bold text-peach">|</span>
-			<h3 class="text-xl font-bold">Projects</h3>
+		<div class="container my-12">
+			<hr class="dash-line text-muted-foreground" />
 		</div>
-		<ul>
-			{
-				projects.map((project) => (
-					<li>
-						<span />
-						<span>{project.name}</span>
-						<div class="flex flex-row gap-2 flex-wrap font-normal">
-							{JSON.parse(project.tech)?.map((tech: string) => {
-								return <div>{tech}</div>;
-							})}
+		<section class="container flex flex-col gap-4">
+			<div class="flex items-center gap-2">
+				<span class="text-3xl font-bold text-peach">|</span>
+				<h3 class="text-2xl font-bold">Focus</h3>
+			</div>
+			<div class="text-lg grid grid-cols-12 gap-10">
+				<div class="flex flex-col gap-4 col-span-7">
+					<p class="text-muted-foreground">Big picture experience:</p>
+					<ul class="list-star list-inside [&>li::before]:text-mint">
+						<li>Full-stack web app development</li>
+						<li>Web performance assessments & optimizations</li>
+						<li>Marketing site development</li>
+						<li>Brand & marketing strategies</li>
+					</ul>
+				</div>
+				<div class="flex flex-col gap-4 col-span-5">
+					<p class="text-muted-foreground">Technical experience:</p>
+					<ul
+						class="list-block text-base [&>li]:text-background [&>li]:bg-foreground"
+					>
+						<li class="!bg-malva">Next.js</li>
+						<li class="!bg-malva">React</li>
+						<li class="!bg-malva">TypeScript</li>
+						<li>Node.js</li>
+						<li class="!bg-malva">Tailwind</li>
+						<li>Postgres</li>
+						<li>MySQL</li>
+						<li>Astro</li>
+						<li>PHP</li>
+						<li class="!bg-malva">Wordpress</li>
+						<li>Headless APIs</li>
+						<li>Svelte</li>
+						<li>SvelteKit</li>
+						<li class="!bg-malva">tRPC</li>
+					</ul>
+					<div>
+						<div
+							class="inline-flex gap-2 items-center border px-2 py-1 text-xs text-muted-foreground bg-muted-foreground/10"
+						>
+							<span class="text-malva">&#9632;</span> Indicates high skill & experience
 						</div>
-						{/* <img src={project.image} alt={project.name} /> */}
-					</li>
-				))
-			}
-		</ul>
-	</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<div class="container my-12">
+			<hr class="dash-line text-muted-foreground" />
+		</div>
+		<section class="container flex flex-col gap-4">
+			<div class="flex items-center gap-2">
+				<span class="text-3xl font-bold text-peach">|</span>
+				<h3 class="text-2xl font-bold">Projects</h3>
+			</div>
+			<ul class="flex flex-col gap-6">
+				{
+					projects.map((project) => (
+						<li class="flex gap-10">
+							<HalftoneImage
+								width={800}
+								height={250}
+								src={project.image}
+								alt={project.name}
+								class="w-full max-w-[300px] h-full aspect-video object-cover"
+								loading="lazy"
+								dropShadowEnabled={false}
+							/>
+							<div>
+								<div class="flex items-center gap-2 mt-4">
+									<h3 class="text-2xl font-bold">{project.name}</h3>
+									{/* <div class="inline-flex items-center gap-[2px] text-xl">
+										{[...project.name].map((char) => {
+											return (
+												<div class="bg-foreground text-background px-0.5">
+													{char.toUpperCase()}
+												</div>
+											);
+										})}
+										<div />
+									</div> */}
+								</div>
+								<div class="mt-2">
+									<p class="text-muted-foreground">{project.description}</p>
+								</div>
+								<ul class="mt-6 list-block text-xs [&>li]:text-foreground/75 [&>li]:bg-foreground/10">
+									{JSON.parse(project.tech)?.map((tech: string) => {
+										return <li>{tech}</li>;
+									})}
+								</ul>
+								{/* <HalftoneSeparator>Testing</HalftoneSeparator> */}
+							</div>
+						</li>
+					))
+				}
+			</ul>
+		</section>
+		<div class="container my-12">
+			<hr class="dot-line text-muted-foreground" />
+		</div>
+	</header>
 </RootLayout>

@@ -9,6 +9,17 @@ const Project = defineTable({
 		name: column.text(),
 		image: column.text(),
 		tech: column.text(),
+		description: column.text(),
+		externalUrl: column.text({
+			optional: true,
+		}),
+		internalUrl: column.text({
+			optional: true,
+		}),
+		githubUrl: column.text({
+			optional: true,
+		}),
+		status: column.text(),
 	},
 });
 

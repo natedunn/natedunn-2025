@@ -1,0 +1,47 @@
+---
+import { cn } from "$lib/utils";
+import { Image } from "astro:assets";
+import type { ComponentProps } from "astro/types";
+import type { ClassValue } from "clsx";
+
+type Props = ComponentProps<typeof Image> & {
+	filterEnabled?: boolean;
+	dropShadowEnabled?: boolean;
+	classes?: {
+		wrapper?: ClassValue;
+		dropShadow?: ClassValue;
+	};
+};
+
+const {
+	filterEnabled = true,
+	dropShadowEnabled = true,
+	classes,
+	...imageProps
+}: Props = Astro.props;
+
+const classList = {
+	wrapper: cn("relative", dropShadowEnabled && "mb-3 mr-3", imageProps.class),
+	imageWrapper: cn(
+		filterEnabled && "halftone-filter",
+		dropShadowEnabled &&
+			"flex items-center justify-center relative select-none pointer-events-none"
+	),
+	image: cn(
+		dropShadowEnabled &&
+			"relative z-10 border-2 border-border pointer-events-auto",
+		imageProps.class
+	),
+	dropShadow: cn(
+		"absolute inset-0 z-0 border border-border border-dotted h-full w-full bg-halftone translate-x-3 translate-y-3 select-none pointer-events-none",
+		classes?.dropShadow
+	),
+};
+---
+
+<div class={classList.wrapper}>
+	<div class={classList.imageWrapper}>
+		<Image {...imageProps} class={classList.image} />
+	</div>
+	{dropShadowEnabled && <div class={classList.dropShadow} />}
+</div>

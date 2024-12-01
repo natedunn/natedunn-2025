@@ -22,9 +22,11 @@ const menu = await db.select().from(Menu).all();
 		<ModeWatcher client:load />
 		<ThemeManager defaultTheme="auto" />
 		<ClientRouter />
-		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta charset="UTF-8" />
+		<meta name="generator" content={Astro.generator} />
+		<title>nate.space / @natedunn</title>
 		<link
 			rel="preload"
 			as="font"
@@ -39,26 +41,28 @@ const menu = await db.select().from(Menu).all();
 			href={geistMono900}
 			crossorigin="anonymous"
 		/>
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-		<style is:global>
-			:root[data-theme="light"] {
-				/* CSS variables */
-			}
-			:root[data-theme="dark"] {
-				/* CSS variables */
-			}
-		</style>
 	</head>
 	<body>
-		<nav class="flex flex-row gap-2 items-center">
-			<a href="/"> ñ </a>
+		<nav class="flex flex-row gap-2 items-center container justify-between">
 			<div>
-				{
-					menu.map((item) => {
-						return <a href={item.url}>{item.text}</a>;
-					})
-				}
+				<a
+					class="text-xl font-bold text-foreground p-5 inline-flex items-center size-5 justify-center bg-muted hocus:bg-primary text-muted-background hocus:text-background"
+					href="/">&ntilde;</a
+				>
+			</div>
+			<div class="flex items-center gap-2">
+				<ul class="flex flex-row items-center gap-1">
+					{
+						menu.map((item) => {
+							return (
+								<li>
+									{/* prettier-ignore */}
+									<a class="text-sm bg-muted hocus:bg-primary text-muted-background hocus:text-background underline-offset-4 hocus:underline underline decoration-foreground/50 hocus:decoration-background decoration-dotted hocus:decoration-solid py-2 px-3 inline-block" href={item.url}>{item.text}</a>
+								</li>
+							);
+						})
+					}
+				</ul>
 				<ThemeSwitcher client:load />
 			</div>
 		</nav>
